@@ -6,3 +6,4 @@ joblib
 werkzeug
 mysql-connector-python
 python-dotenv
+gunicorn
