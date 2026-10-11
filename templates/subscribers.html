@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Subscribers | Mobile Data Intelligence</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <div class="brand-logo">
+            <i class="fa-solid fa-signal"></i>
+        </div>
+
+        <div class="brand-text">
+
+            <strong>Mobile Data</strong>
+
+            <span>Intelligence</span>
+
+        </div>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('dashboard') }}">
+
+            <i class="fa-solid fa-chart-pie"></i>
+
+            Dashboard
+
+        </a>
+
+
+        <a href="{{ url_for('subscribers') }}"
+           class="active">
+
+            <i class="fa-solid fa-users"></i>
+
+            Subscribers
+
+        </a>
+
+
+        <a href="{{ url_for('profile') }}">
+
+            <i class="fa-solid fa-user"></i>
+
+            Profile
+
+        </a>
+
+
+        <a href="{{ url_for('usage') }}">
+
+            <i class="fa-solid fa-chart-column"></i>
+
+            Usage
+
+        </a>
+
+
+        <a href="/analytics">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            Analytics
+
+        </a>
+
+    </div>
+
+
+    <div class="nav-right">
+
+        <div class="status-indicator">
+
+            <span class="status-dot"></span>
+
+            System Online
+
+        </div>
+
+
+        <a href="{{ url_for('logout') }}"
+           class="logout-btn">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="page-container">
+
+
+    <!-- PAGE HEADER -->
+
+    <section class="page-hero">
+
+        <div>
+
+            <span class="hero-label">
+
+                <i class="fa-solid fa-database"></i>
+
+                SUBSCRIBER MANAGEMENT
+
+            </span>
+
+
+            <h1>
+                Subscriber
+                <span>Directory</span>
+            </h1>
+
+
+            <p>
+                Search, explore and analyze subscriber
+                information from the complete database.
+            </p>
+
+        </div>
+
+
+        <div class="page-hero-icon">
+
+            <i class="fa-solid fa-users"></i>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         SEARCH PANEL
+    ================================================== -->
+
+    <section class="search-panel">
+
+        <div class="search-heading">
+
+            <div class="search-icon">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+            </div>
+
+
+            <div>
+
+                <h2>
+                    Find a Subscriber
+                </h2>
+
+                <p>
+                    Search using a Subscriber ID
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form action="{{ url_for('search_subscriber') }}"
+              method="GET"
+              class="subscriber-search-form">
+
+            <div class="search-input-wrapper">
+
+                <i class="fa-solid fa-id-card"></i>
+
+                <input
+                    type="text"
+                    name="subscriber_id"
+                    placeholder="Enter Subscriber ID e.g. SUB001"
+                    value="{{ search or '' }}"
+                    required
+                >
+
+            </div>
+
+
+            <button type="submit"
+                    class="search-button">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                Search Subscriber
+
+            </button>
+
+        </form>
+
+
+        {% if error %}
+
+        <div class="search-error">
+
+            <i class="fa-solid fa-circle-exclamation"></i>
+
+            <span>{{ error }}</span>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+
+
+    <!-- =================================================
+         DATABASE INFORMATION
+    ================================================== -->
+
+    <section class="directory-info-grid">
+
+
+        <div class="directory-info-card">
+
+            <div class="directory-info-icon">
+
+                <i class="fa-solid fa-users"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    DATABASE RECORDS
+                </span>
+
+                <strong>
+                    100+
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="directory-info-card">
+
+            <div class="directory-info-icon">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    SEARCH
+                </span>
+
+                <strong>
+                    Subscriber ID
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="directory-info-card">
+
+            <div class="directory-info-icon">
+
+                <i class="fa-solid fa-database"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    DATA SOURCE
+                </span>
+
+                <strong>
+                    MySQL
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         SUBSCRIBER TABLE
+    ================================================== -->
+
+    <section class="directory-section">
+
+
+        <div class="section-header">
+
+            <div>
+
+                <span class="section-label">
+
+                    <i class="fa-solid fa-table"></i>
+
+                    SUBSCRIBER RECORDS
+
+                </span>
+
+
+                <h2>
+                    Subscriber Directory
+                </h2>
+
+
+                <p>
+                    {% if search %}
+                        Search results for "{{ search }}"
+                    {% else %}
+                        Browse available subscriber records
+                    {% endif %}
+                </p>
+
+            </div>
+
+
+            <a href="{{ url_for('dashboard') }}"
+               class="back-button">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Dashboard
+
+            </a>
+
+        </div>
+
+
+
+        <div class="subscriber-table-wrapper">
+
+            <table class="subscriber-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Subscriber
+                        </th>
+
+                        <th>
+                            Region
+                        </th>
+
+                        <th>
+                            Plan
+                        </th>
+
+                        <th>
+                            Data Usage
+                        </th>
+
+                        <th>
+                            Call Usage
+                        </th>
+
+                        <th>
+                            SMS Usage
+                        </th>
+
+                        <th>
+                            Bill
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                {% for subscriber in subscribers %}
+
+                    <tr>
+
+
+                        <!-- SUBSCRIBER -->
+
+                        <td>
+
+                            <div class="subscriber-cell">
+
+                                <div class="subscriber-avatar">
+
+                                    
+                                {{ (subscriber.subscriber_id|string)[-2:] }}
+
+                                </div>
+
+
+                                <div>
+
+                                    <strong>
+                                        {{ subscriber.subscriber_id }}
+                                    </strong>
+
+                                    <span>
+                                        Age {{ subscriber.age }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- REGION -->
+
+                        <td>
+
+                            <span class="region-text">
+
+                                <i class="fa-solid fa-location-dot"></i>
+
+                                {{ subscriber.region }}
+
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- PLAN -->
+
+                        <td>
+
+                            <span class="plan-badge">
+
+                                {{ subscriber.current_plan }}
+
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- DATA -->
+
+                        <td>
+
+                            <div class="table-usage">
+
+                                <strong>
+                                    {{ subscriber.data_usage_gb }} GB
+                                </strong>
+
+                                <span>
+                                    /
+                                    {{ subscriber.data_limit_gb }} GB
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- CALL -->
+
+                        <td>
+
+                            <div class="table-usage">
+
+                                <strong>
+                                    {{ subscriber.call_minutes }}
+                                </strong>
+
+                                <span>
+                                    min
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- SMS -->
+
+                        <td>
+
+                            <div class="table-usage">
+
+                                <strong>
+                                    {{ subscriber.sms_usage }}
+                                </strong>
+
+                                <span>
+                                    SMS
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- BILL -->
+
+                        <td>
+
+                            <strong class="bill-value">
+
+                                ₹{{ "%.2f"|format(subscriber.total_bill or 0) }}
+
+                            </strong>
+
+                        </td>
+
+
+
+                        <!-- ACTION -->
+
+                        <td>
+
+                            <a
+                                href="{{ url_for('subscriber_profile', subscriber_id=subscriber.subscriber_id) }}"
+                                class="table-action"
+                            >
+
+                                View Profile
+
+                                <i class="fa-solid fa-arrow-right"></i>
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+
+                        <td colspan="8"
+                            class="empty-state">
+
+                            <i class="fa-solid fa-user-slash"></i>
+
+                            <h3>
+                                No Subscriber Found
+                            </h3>
+
+                            <p>
+                                Try searching with another Subscriber ID.
+                            </p>
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         QUICK INFORMATION
+    ================================================== -->
+
+    <section class="quick-info">
+
+        <div class="quick-info-icon">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+        </div>
+
+
+        <div>
+
+            <strong>
+                How subscriber search works
+            </strong>
+
+            <p>
+                Enter any Subscriber ID from the database.
+                The selected subscriber will become the active
+                subscriber and their profile, usage and analytics
+                information can then be explored.
+            </p>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <div>
+
+        <strong>
+            Mobile Data Intelligence
+        </strong>
+
+        <span>
+            | Subscriber Analytics Platform
+        </span>
+
+    </div>
+
+
+    <div>
+
+        <span>
+            Python
+        </span>
+
+        <span class="footer-dot">•</span>
+
+        <span>
+            Flask
+        </span>
+
+        <span class="footer-dot">•</span>
+
+        <span>
+            MySQL
+        </span>
+
+        <span class="footer-dot">•</span>
+
+        <span>
+            Machine Learning
+        </span>
+
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>

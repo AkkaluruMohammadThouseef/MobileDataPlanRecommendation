@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {{ subscriber.subscriber_id }} | Subscriber Profile
+    </title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVIGATION BAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <div class="brand-logo">
+            <i class="fa-solid fa-signal"></i>
+        </div>
+
+        <div class="brand-text">
+
+            <strong>Mobile Data</strong>
+
+            <span>Intelligence</span>
+
+        </div>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('dashboard') }}">
+
+            <i class="fa-solid fa-chart-pie"></i>
+
+            Dashboard
+
+        </a>
+
+
+        <a href="{{ url_for('subscribers') }}">
+
+            <i class="fa-solid fa-users"></i>
+
+            Subscribers
+
+        </a>
+
+
+        <a href="{{ url_for('profile') }}"
+           class="active">
+
+            <i class="fa-solid fa-user"></i>
+
+            Profile
+
+        </a>
+
+
+        <a href="{{ url_for('usage') }}">
+
+            <i class="fa-solid fa-chart-column"></i>
+
+            Usage
+
+        </a>
+
+
+        <a href="/analytics">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            Analytics
+
+        </a>
+
+    </div>
+
+
+    <div class="nav-right">
+
+        <div class="status-indicator">
+
+            <span class="status-dot"></span>
+
+            System Online
+
+        </div>
+
+
+        <a href="{{ url_for('logout') }}"
+           class="logout-btn">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="profile-container">
+
+
+    <!-- =================================================
+         PROFILE HERO
+    ================================================== -->
+
+    <section class="profile-hero">
+
+
+        <div class="profile-identity">
+
+
+            <div class="large-avatar">
+
+                {{ subscriber.subscriber_id[-2:] }}
+
+            </div>
+
+
+            <div class="identity-content">
+
+                <span class="profile-label">
+
+                    <i class="fa-solid fa-user-check"></i>
+
+                    ACTIVE SUBSCRIBER
+
+                </span>
+
+
+                <h1>
+
+                    {{ subscriber.subscriber_id }}
+
+                </h1>
+
+
+                <p>
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    {{ subscriber.region }}
+
+                    <span class="identity-divider">
+                        •
+                    </span>
+
+                    Age {{ subscriber.age }}
+
+                    <span class="identity-divider">
+                        •
+                    </span>
+
+                    {{ subscriber.tenure_months }} months tenure
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-actions">
+
+
+            <a href="{{ url_for('usage') }}"
+               class="profile-action-button">
+
+                <i class="fa-solid fa-chart-column"></i>
+
+                View Usage
+
+            </a>
+
+
+            <a href="{{ url_for('subscribers') }}"
+               class="profile-back-button">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         QUICK STATUS CARDS
+    ================================================== -->
+
+    <section class="profile-stats">
+
+
+        <!-- CURRENT PLAN -->
+
+        <div class="profile-stat-card">
+
+            <div class="profile-stat-icon plan-stat">
+
+                <i class="fa-solid fa-sim-card"></i>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    CURRENT PLAN
+                </span>
+
+                <strong>
+                    {{ subscriber.current_plan }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- DATA -->
+
+        <div class="profile-stat-card">
+
+            <div class="profile-stat-icon data-stat">
+
+                <i class="fa-solid fa-wifi"></i>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    DATA USAGE
+                </span>
+
+                <strong>
+                    {{ subscriber.data_usage_gb }} GB
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- BILL -->
+
+        <div class="profile-stat-card">
+
+            <div class="profile-stat-icon bill-stat">
+
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    TOTAL BILL
+                </span>
+
+                <strong>
+                    ₹{{ "%.2f"|format(subscriber.total_bill or 0) }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- RISK -->
+
+        <div class="profile-stat-card">
+
+            <div class="profile-stat-icon risk-stat">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    CHURN RISK
+                </span>
+
+                <strong>
+                    {{ subscriber.churn_risk }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         INFORMATION GRID
+    ================================================== -->
+
+    <section class="profile-grid">
+
+
+        <!-- =================================================
+             PERSONAL INFORMATION
+        ================================================== -->
+
+        <div class="profile-panel">
+
+
+            <div class="profile-panel-header">
+
+                <div>
+
+                    <span class="panel-tag">
+                        PROFILE
+                    </span>
+
+                    <h2>
+                        Subscriber Information
+                    </h2>
+
+                </div>
+
+
+                <div class="profile-panel-icon">
+
+                    <i class="fa-solid fa-id-card"></i>
+
+                </div>
+
+            </div>
+
+
+            <div class="details-grid">
+
+
+                <div class="detail-item">
+
+                    <span>
+                        Subscriber ID
+                    </span>
+
+                    <strong>
+                        {{ subscriber.subscriber_id }}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span>
+                        Age
+                    </span>
+
+                    <strong>
+                        {{ subscriber.age }} years
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span>
+                        Region
+                    </span>
+
+                    <strong>
+                        {{ subscriber.region }}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span>
+                        Tenure
+                    </span>
+
+                    <strong>
+                        {{ subscriber.tenure_months }} months
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span>
+                        Payment Method
+                    </span>
+
+                    <strong>
+                        {{ subscriber.payment_method }}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span>
+                        Current Plan
+                    </span>
+
+                    <strong>
+                        {{ subscriber.current_plan }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             PLAN INFORMATION
+        ================================================== -->
+
+        <div class="profile-panel">
+
+
+            <div class="profile-panel-header">
+
+                <div>
+
+                    <span class="panel-tag">
+                        PLAN
+                    </span>
+
+                    <h2>
+                        Plan Limits
+                    </h2>
+
+                </div>
+
+
+                <div class="profile-panel-icon">
+
+                    <i class="fa-solid fa-sliders"></i>
+
+                </div>
+
+            </div>
+
+
+            <div class="limit-list">
+
+
+                <div class="limit-row">
+
+                    <div>
+
+                        <span>
+                            Data Limit
+                        </span>
+
+                        <strong>
+                            {{ subscriber.data_limit_gb }} GB
+                        </strong>
+
+                    </div>
+
+                    <i class="fa-solid fa-wifi"></i>
+
+                </div>
+
+
+                <div class="limit-row">
+
+                    <div>
+
+                        <span>
+                            Call Limit
+                        </span>
+
+                        <strong>
+                            {{ subscriber.call_limit_min }} minutes
+                        </strong>
+
+                    </div>
+
+                    <i class="fa-solid fa-phone"></i>
+
+                </div>
+
+
+                <div class="limit-row">
+
+                    <div>
+
+                        <span>
+                            SMS Limit
+                        </span>
+
+                        <strong>
+                            {{ subscriber.sms_limit }} SMS
+                        </strong>
+
+                    </div>
+
+                    <i class="fa-solid fa-message"></i>
+
+                </div>
+
+
+                <div class="limit-row">
+
+                    <div>
+
+                        <span>
+                            Monthly Base Price
+                        </span>
+
+                        <strong>
+                            ₹{{ "%.2f"|format(subscriber.monthly_base_price or 0) }}
+                        </strong>
+
+                    </div>
+
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             CURRENT USAGE
+        ================================================== -->
+
+        <div class="profile-panel">
+
+
+            <div class="profile-panel-header">
+
+                <div>
+
+                    <span class="panel-tag">
+                        CURRENT USAGE
+                    </span>
+
+                    <h2>
+                        Consumption
+                    </h2>
+
+                </div>
+
+
+                <div class="profile-panel-icon">
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                </div>
+
+            </div>
+
+
+            <div class="consumption-list">
+
+
+                <div class="consumption-row">
+
+                    <div class="consumption-name">
+
+                        <i class="fa-solid fa-wifi"></i>
+
+                        <span>
+                            Data
+                        </span>
+
+                    </div>
+
+                    <strong>
+                        {{ subscriber.data_usage_gb }} GB
+                    </strong>
+
+                </div>
+
+
+                <div class="consumption-row">
+
+                    <div class="consumption-name">
+
+                        <i class="fa-solid fa-phone"></i>
+
+                        <span>
+                            Calls
+                        </span>
+
+                    </div>
+
+                    <strong>
+                        {{ subscriber.call_minutes }} min
+                    </strong>
+
+                </div>
+
+
+                <div class="consumption-row">
+
+                    <div class="consumption-name">
+
+                        <i class="fa-solid fa-message"></i>
+
+                        <span>
+                            SMS
+                        </span>
+
+                    </div>
+
+                    <strong>
+                        {{ subscriber.sms_usage }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             FUTURE PREDICTION
+        ================================================== -->
+
+        <div class="profile-panel prediction-panel">
+
+
+            <div class="profile-panel-header">
+
+                <div>
+
+                    <span class="panel-tag prediction-tag">
+                        FORECAST
+                    </span>
+
+                    <h2>
+                        Future Usage
+                    </h2>
+
+                </div>
+
+
+                <div class="profile-panel-icon prediction-icon">
+
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                </div>
+
+            </div>
+
+
+            <div class="prediction-list">
+
+
+                <div class="prediction-item">
+
+                    <div>
+
+                        <span>
+                            Predicted Data
+                        </span>
+
+                        <strong>
+                            {{ subscriber.future_data_gb }} GB
+                        </strong>
+
+                    </div>
+
+                    <i class="fa-solid fa-wifi"></i>
+
+                </div>
+
+
+                <div class="prediction-item">
+
+                    <div>
+
+                        <span>
+                            Predicted Calls
+                        </span>
+
+                        <strong>
+                            {{ subscriber.future_call_minutes }} min
+                        </strong>
+
+                    </div>
+
+                    <i class="fa-solid fa-phone"></i>
+
+                </div>
+
+
+                <div class="prediction-item">
+
+                    <div>
+
+                        <span>
+                            Predicted SMS
+                        </span>
+
+                        <strong>
+                            {{ subscriber.future_sms }}
+                        </strong>
+
+                    </div>
+
+                    <i class="fa-solid fa-message"></i>
+
+                </div>
+
+            </div>
+
+
+            <div class="prediction-note">
+
+                <i class="fa-solid fa-brain"></i>
+
+                <span>
+                    Machine-learning forecast data
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         BILLING & OVERAGE
+    ================================================== -->
+
+    <section class="billing-section">
+
+
+        <div class="billing-header">
+
+            <div>
+
+                <span class="section-label">
+
+                    <i class="fa-solid fa-receipt"></i>
+
+                    BILLING ANALYSIS
+
+                </span>
+
+
+                <h2>
+                    Billing & Overage Details
+                </h2>
+
+            </div>
+
+
+            {% if subscriber.overage_flag == "Yes" %}
+
+                <div class="large-status danger">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    Overage Detected
+
+                </div>
+
+            {% else %}
+
+                <div class="large-status success">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Within Plan Limits
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="billing-grid">
+
+
+            <div class="billing-card">
+
+                <span>
+                    Data Overage
+                </span>
+
+                <strong>
+                    {{ subscriber.data_overage_gb }} GB
+                </strong>
+
+                <small>
+                    Additional data consumed
+                </small>
+
+            </div>
+
+
+            <div class="billing-card">
+
+                <span>
+                    Call Overage
+                </span>
+
+                <strong>
+                    {{ subscriber.call_overage_min }} min
+                </strong>
+
+                <small>
+                    Additional voice minutes
+                </small>
+
+            </div>
+
+
+            <div class="billing-card">
+
+                <span>
+                    SMS Overage
+                </span>
+
+                <strong>
+                    {{ subscriber.sms_overage }}
+                </strong>
+
+                <small>
+                    Additional messages
+                </small>
+
+            </div>
+
+
+            <div class="billing-card highlight-billing">
+
+                <span>
+                    Overage Charge
+                </span>
+
+                <strong>
+                    ₹{{ "%.2f"|format(subscriber.overage_charge or 0) }}
+                </strong>
+
+                <small>
+                    Additional charges
+                </small>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         QUICK ACTIONS
+    ================================================== -->
+
+    <section class="profile-quick-actions">
+
+
+        <a href="{{ url_for('usage') }}"
+           class="quick-action-card">
+
+            <div>
+
+                <i class="fa-solid fa-chart-column"></i>
+
+            </div>
+
+            <span>
+                Usage Analytics
+            </span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+
+        <a href="/analytics"
+           class="quick-action-card">
+
+            <div>
+
+                <i class="fa-solid fa-brain"></i>
+
+            </div>
+
+            <span>
+                Intelligent Analytics
+            </span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+
+        <a href="{{ url_for('subscribers') }}"
+           class="quick-action-card">
+
+            <div>
+
+                <i class="fa-solid fa-users"></i>
+
+            </div>
+
+            <span>
+                Subscriber Directory
+            </span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <div>
+
+        <strong>
+            Mobile Data Intelligence
+        </strong>
+
+        <span>
+            | Subscriber Analytics Platform
+        </span>
+
+    </div>
+
+
+    <div>
+
+        <span>Python</span>
+
+        <span class="footer-dot">•</span>
+
+        <span>Flask</span>
+
+        <span class="footer-dot">•</span>
+
+        <span>MySQL</span>
+
+        <span class="footer-dot">•</span>
+
+        <span>Machine Learning</span>
+
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>

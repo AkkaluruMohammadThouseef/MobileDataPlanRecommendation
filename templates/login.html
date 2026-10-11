@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Mobile Data Plan Recommendation</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+            font-family: 'Inter', sans-serif;
+
+            min-height: 100vh;
+
+            background: #f8fafc;
+
+            color: #0f172a;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =========================================
+           MAIN LOGIN PAGE
+        ========================================= */
+
+        .login-page {
+            min-height: 100vh;
+
+            display: flex;
+
+            background: #f8fafc;
+        }
+
+
+        /* =========================================
+           LEFT BRANDING SECTION
+        ========================================= */
+
+        .branding-section {
+            width: 56%;
+
+            min-height: 100vh;
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0b1f3a 0%,
+                    #123b67 48%,
+                    #1769aa 100%
+                );
+
+            color: white;
+
+            padding: 55px 65px;
+
+            display: flex;
+
+            align-items: center;
+        }
+
+
+        /* Decorative circles */
+
+        .circle-one {
+            position: absolute;
+
+            width: 420px;
+            height: 420px;
+
+            border-radius: 50%;
+
+            background: rgba(59, 130, 246, 0.10);
+
+            right: -160px;
+            top: -100px;
+        }
+
+
+        .circle-two {
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            background: rgba(14, 165, 233, 0.10);
+
+            left: -150px;
+            bottom: -120px;
+        }
+
+
+        .circle-three {
+            position: absolute;
+
+            width: 170px;
+            height: 170px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.035);
+
+            right: 80px;
+            bottom: 70px;
+        }
+
+
+        .branding-content {
+            position: relative;
+
+            z-index: 2;
+
+            width: 100%;
+
+            max-width: 620px;
+
+            margin: auto;
+        }
+
+
+        /* =========================================
+           BRAND LOGO
+        ========================================= */
+
+        .brand-logo-box {
+            width: 58px;
+            height: 58px;
+
+            border-radius: 16px;
+
+            background: rgba(255,255,255,0.96);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-bottom: 28px;
+
+            box-shadow:
+                0 12px 30px rgba(0,0,0,0.18);
+        }
+
+
+        .brand-logo-box i {
+            font-size: 26px;
+
+            color: #2563eb;
+        }
+
+
+        .eyebrow {
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.7px;
+
+            color: #67e8f9;
+
+            margin-bottom: 13px;
+
+            text-transform: uppercase;
+        }
+
+
+        .branding-content h1 {
+            font-size: 43px;
+
+            line-height: 1.12;
+
+            font-weight: 800;
+
+            letter-spacing: -1.5px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .branding-content h1 span {
+            color: #67e8f9;
+        }
+
+
+        .branding-description {
+            font-size: 14px;
+
+            line-height: 1.8;
+
+            color: rgba(255,255,255,0.76);
+
+            max-width: 520px;
+
+            margin-bottom: 32px;
+        }
+
+
+        /* =========================================
+           FEATURE CARDS
+        ========================================= */
+
+        .feature-grid {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 12px;
+
+            max-width: 520px;
+        }
+
+
+        .feature-card {
+            padding: 15px;
+
+            border-radius: 13px;
+
+            background: rgba(255,255,255,0.075);
+
+            border: 1px solid rgba(255,255,255,0.10);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            backdrop-filter: blur(8px);
+
+            transition: 0.25s;
+        }
+
+
+        .feature-card:hover {
+            background: rgba(255,255,255,0.12);
+
+            transform: translateY(-2px);
+        }
+
+
+        .feature-icon {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 10px;
+
+            background: rgba(255,255,255,0.10);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #67e8f9;
+
+            font-size: 15px;
+
+            flex-shrink: 0;
+        }
+
+
+        .feature-text strong {
+            display: block;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            color: white;
+
+            margin-bottom: 3px;
+        }
+
+
+        .feature-text span {
+            font-size: 9px;
+
+            color: rgba(255,255,255,0.60);
+        }
+
+
+        /* =========================================
+           RIGHT LOGIN SECTION
+        ========================================= */
+
+        .login-section {
+            width: 44%;
+
+            min-height: 100vh;
+
+            background: #ffffff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 40px;
+        }
+
+
+        .login-wrapper {
+            width: 100%;
+
+            max-width: 420px;
+        }
+
+
+        /* =========================================
+           LOGIN HEADER
+        ========================================= */
+
+        .login-header {
+            margin-bottom: 30px;
+        }
+
+
+        .login-badge {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 7px 11px;
+
+            border-radius: 20px;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.5px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .login-badge i {
+            font-size: 9px;
+        }
+
+
+        .login-header h2 {
+            font-size: 30px;
+
+            font-weight: 800;
+
+            letter-spacing: -0.7px;
+
+            color: #0f172a;
+
+            margin-bottom: 8px;
+        }
+
+
+        .login-header p {
+            font-size: 12px;
+
+            line-height: 1.6;
+
+            color: #64748b;
+        }
+
+
+        /* =========================================
+           LOGIN CARD
+        ========================================= */
+
+        .login-card {
+            background: #ffffff;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            box-shadow:
+                0 15px 45px rgba(15,23,42,0.08);
+        }
+
+
+        /* =========================================
+           ERROR
+        ========================================= */
+
+        .login-error {
+            background: #fff1f2;
+
+            border: 1px solid #fecdd3;
+
+            color: #be123c;
+
+            border-radius: 9px;
+
+            padding: 11px 13px;
+
+            font-size: 11px;
+
+            margin-bottom: 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+        }
+
+
+        /* =========================================
+           FORM
+        ========================================= */
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+
+        .form-label {
+            display: block;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            color: #334155;
+
+            margin-bottom: 8px;
+
+            letter-spacing: 0.5px;
+
+            text-transform: uppercase;
+        }
+
+
+        .input-wrapper {
+            position: relative;
+        }
+
+
+        .input-icon {
+            position: absolute;
+
+            left: 14px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            pointer-events: none;
+        }
+
+
+        .form-input {
+            width: 100%;
+
+            height: 48px;
+
+            border: 1px solid #dbe2ea;
+
+            background: #f8fafc;
+
+            border-radius: 10px;
+
+            padding: 0 43px;
+
+            outline: none;
+
+            font-family: inherit;
+
+            font-size: 12px;
+
+            color: #0f172a;
+
+            transition: 0.2s;
+        }
+
+
+        .form-input::placeholder {
+            color: #94a3b8;
+        }
+
+
+        .form-input:focus {
+            border-color: #3b82f6;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 4px rgba(59,130,246,0.10);
+        }
+
+
+        .password-toggle {
+            position: absolute;
+
+            right: 14px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            border: none;
+
+            background: none;
+
+            cursor: pointer;
+
+            color: #94a3b8;
+
+            font-size: 13px;
+        }
+
+
+        .password-toggle:hover {
+            color: #2563eb;
+        }
+
+
+        /* =========================================
+           SIGN IN BUTTON
+        ========================================= */
+
+        .login-button {
+            width: 100%;
+
+            height: 49px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1d4ed8,
+                    #2563eb,
+                    #0891b2
+                );
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+
+            box-shadow:
+                0 8px 20px rgba(37,99,235,0.20);
+
+            transition: 0.25s;
+        }
+
+
+        .login-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 25px rgba(37,99,235,0.28);
+        }
+
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+
+        .button-arrow {
+            margin-left: 6px;
+        }
+
+
+        /* =========================================
+           SECURITY NOTE
+        ========================================= */
+
+        .security-note {
+            margin-top: 20px;
+
+            padding-top: 18px;
+
+            border-top: 1px solid #eef2f7;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            font-size: 9px;
+
+            color: #64748b;
+        }
+
+
+        .security-note i {
+            color: #059669;
+
+            font-size: 10px;
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        .login-footer {
+            text-align: center;
+
+            margin-top: 20px;
+
+            font-size: 9px;
+
+            color: #94a3b8;
+        }
+
+
+        .login-footer span {
+            color: #2563eb;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 950px) {
+
+            .branding-section {
+                width: 50%;
+
+                padding: 40px;
+            }
+
+            .login-section {
+                width: 50%;
+
+                padding: 30px;
+            }
+
+            .branding-content h1 {
+                font-size: 34px;
+            }
+
+        }
+
+
+        @media (max-width: 750px) {
+
+            .login-page {
+                display: block;
+            }
+
+
+            .branding-section {
+                width: 100%;
+
+                min-height: auto;
+
+                padding: 38px 25px;
+            }
+
+
+            .branding-content h1 {
+                font-size: 31px;
+            }
+
+
+            .branding-description {
+                font-size: 12px;
+            }
+
+
+            .feature-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+
+            .login-section {
+                width: 100%;
+
+                min-height: auto;
+
+                padding: 35px 20px;
+            }
+
+        }
+
+
+        @media (max-width: 450px) {
+
+            .branding-section {
+                padding: 30px 20px;
+            }
+
+
+            .branding-content h1 {
+                font-size: 27px;
+            }
+
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .login-card {
+                padding: 22px;
+            }
+
+
+            .login-header h2 {
+                font-size: 26px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-page">
+
+
+    <!-- =====================================
+         LEFT BRANDING
+    ====================================== -->
+
+    <section class="branding-section">
+
+
+        <div class="circle-one"></div>
+        <div class="circle-two"></div>
+        <div class="circle-three"></div>
+
+
+        <div class="branding-content">
+
+
+            <div class="brand-logo-box">
+
+                <i class="fa-solid fa-mobile-screen-button"></i>
+
+            </div>
+
+
+            <div class="eyebrow">
+                Intelligent Telecom Analytics
+            </div>
+
+
+            <h1>
+                Mobile Data Plan
+                <br>
+                <span>Recommendation</span>
+            </h1>
+
+
+            <p class="branding-description">
+
+                Analyze subscriber usage, predict future requirements,
+                and discover suitable mobile plans using data analytics
+                and machine learning.
+
+            </p>
+
+
+            <!-- FEATURES -->
+
+            <div class="feature-grid">
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+
+                    <div class="feature-text">
+
+                        <strong>
+                            Usage Analytics
+                        </strong>
+
+                        <span>
+                            Monitor subscriber usage
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+
+                    <div class="feature-text">
+
+                        <strong>
+                            ML Predictions
+                        </strong>
+
+                        <span>
+                            Predict future requirements
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+
+                    <div class="feature-text">
+
+                        <strong>
+                            Plan Recommendations
+                        </strong>
+
+                        <span>
+                            Intelligent plan selection
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-user-group"></i>
+                    </div>
+
+                    <div class="feature-text">
+
+                        <strong>
+                            Subscriber Insights
+                        </strong>
+
+                        <span>
+                            Data-driven customer view
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         RIGHT LOGIN
+    ====================================== -->
+
+    <section class="login-section">
+
+
+        <div class="login-wrapper">
+
+
+            <!-- HEADER -->
+
+            <div class="login-header">
+
+
+                <div class="login-badge">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    SECURE ACCESS
+
+                </div>
+
+
+                <h2>
+                    Welcome Back
+                </h2>
+
+
+                <p>
+                    Sign in to continue to your subscriber
+                    analytics dashboard.
+                </p>
+
+
+            </div>
+
+
+
+            <!-- LOGIN CARD -->
+
+            <div class="login-card">
+
+
+                {% if error %}
+
+                <div class="login-error">
+
+                    <i class="fa-solid fa-circle-exclamation"></i>
+
+                    {{ error }}
+
+                </div>
+
+                {% endif %}
+
+
+
+                <form
+                    method="POST"
+                    action="/"
+                >
+
+
+                    <!-- USERNAME -->
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Username
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-user input-icon"></i>
+
+
+                            <input
+                                type="text"
+                                name="username"
+                                class="form-input"
+                                placeholder="Enter username"
+                                required
+                                autocomplete="username"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Password
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-lock input-icon"></i>
+
+
+                            <input
+                                type="password"
+                                name="password"
+                                id="password"
+                                class="form-input"
+                                placeholder="Enter password"
+                                required
+                                autocomplete="current-password"
+                            >
+
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword()"
+                            >
+
+                                <i
+                                    class="fa-solid fa-eye"
+                                    id="eyeIcon"
+                                ></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SIGN IN -->
+
+                    <button
+                        type="submit"
+                        class="login-button"
+                    >
+
+                        Sign In
+
+                        <span class="button-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+
+                </form>
+
+
+
+                <!-- SECURITY -->
+
+                <div class="security-note">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Secure subscriber account access
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- FOOTER -->
+
+            <div class="login-footer">
+
+                Mobile Data Plan Recommendation System
+
+                <br><br>
+
+                Powered by
+                <span>
+                    Data Analytics & Machine Learning
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+
+<script>
+
+    function togglePassword() {
+
+        const password =
+            document.getElementById("password");
+
+        const eyeIcon =
+            document.getElementById("eyeIcon");
+
+
+        if (password.type === "password") {
+
+            password.type = "text";
+
+            eyeIcon.classList.remove("fa-eye");
+
+            eyeIcon.classList.add("fa-eye-slash");
+
+        } else {
+
+            password.type = "password";
+
+            eyeIcon.classList.remove("fa-eye-slash");
+
+            eyeIcon.classList.add("fa-eye");
+
+        }
+
+    }
+
+</script>
+
+
+</body>
+</html>

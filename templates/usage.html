@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Usage Analytics | Mobile Data Intelligence
+    </title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <div class="brand-logo">
+            <i class="fa-solid fa-signal"></i>
+        </div>
+
+        <div class="brand-text">
+
+            <strong>Mobile Data</strong>
+
+            <span>Intelligence</span>
+
+        </div>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('dashboard') }}">
+
+            <i class="fa-solid fa-chart-pie"></i>
+
+            Dashboard
+
+        </a>
+
+
+        <a href="{{ url_for('subscribers') }}">
+
+            <i class="fa-solid fa-users"></i>
+
+            Subscribers
+
+        </a>
+
+
+        <a href="{{ url_for('profile') }}">
+
+            <i class="fa-solid fa-user"></i>
+
+            Profile
+
+        </a>
+
+
+        <a href="{{ url_for('usage') }}"
+           class="active">
+
+            <i class="fa-solid fa-chart-column"></i>
+
+            Usage
+
+        </a>
+
+
+        <a href="/analytics">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            Analytics
+
+        </a>
+
+    </div>
+
+
+    <div class="nav-right">
+
+        <div class="status-indicator">
+
+            <span class="status-dot"></span>
+
+            System Online
+
+        </div>
+
+
+        <a href="{{ url_for('logout') }}"
+           class="logout-btn">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="usage-page-container">
+
+
+    <!-- =================================================
+         PAGE HEADER
+    ================================================== -->
+
+    <section class="usage-hero">
+
+        <div>
+
+            <span class="hero-label">
+
+                <i class="fa-solid fa-chart-column"></i>
+
+                USAGE INTELLIGENCE
+
+            </span>
+
+
+            <h1>
+
+                Usage
+                <span>Analytics</span>
+
+            </h1>
+
+
+            <p>
+
+                Monitor data, voice and messaging consumption
+                for the currently selected subscriber.
+
+            </p>
+
+        </div>
+
+
+        <div class="usage-hero-icon">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         SELECTED SUBSCRIBER
+    ================================================== -->
+
+    <section class="selected-subscriber-card">
+
+        <div class="selected-avatar">
+
+            {{ subscriber.subscriber_id[-2:] }}
+
+        </div>
+
+
+        <div class="selected-info">
+
+            <span>
+                CURRENTLY ANALYZING
+            </span>
+
+            <h2>
+                {{ subscriber.subscriber_id }}
+            </h2>
+
+            <p>
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                {{ subscriber.region }}
+
+                <span>•</span>
+
+                {{ subscriber.current_plan }}
+
+            </p>
+
+        </div>
+
+
+        <a href="{{ url_for('subscribers') }}"
+           class="change-subscriber">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            Change Subscriber
+
+        </a>
+
+    </section>
+
+
+
+    <!-- =================================================
+         USAGE OVERVIEW
+    ================================================== -->
+
+    <section class="usage-cards-grid">
+
+
+        <!-- =================================================
+             DATA
+        ================================================== -->
+
+        <div class="usage-detail-card">
+
+            <div class="usage-card-top">
+
+                <div class="usage-main-icon data-usage-icon">
+
+                    <i class="fa-solid fa-wifi"></i>
+
+                </div>
+
+
+                <div class="usage-card-title">
+
+                    <span>
+                        MOBILE DATA
+                    </span>
+
+                    <h2>
+                        {{ subscriber.data_usage_gb }} GB
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="usage-percentage">
+
+                <strong>
+                    {{ data_percentage }}%
+                </strong>
+
+                <span>
+                    of {{ subscriber.data_limit_gb }} GB limit
+                </span>
+
+            </div>
+
+
+            <div class="large-progress">
+
+                <div class="large-progress-fill data-fill"
+                     style="width: {{ data_progress_width }}%;">
+                </div>
+
+            </div>
+
+
+            <div class="usage-card-footer">
+
+                <span>
+                    Remaining
+                </span>
+
+                <strong>
+
+                    {% if subscriber.data_limit_gb > subscriber.data_usage_gb %}
+                        {{ "%.2f"|format(subscriber.data_limit_gb - subscriber.data_usage_gb) }} GB
+                    {% else %}
+                        0 GB
+                    {% endif %}
+
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             CALLS
+        ================================================== -->
+
+        <div class="usage-detail-card">
+
+            <div class="usage-card-top">
+
+                <div class="usage-main-icon call-usage-icon">
+
+                    <i class="fa-solid fa-phone"></i>
+
+                </div>
+
+
+                <div class="usage-card-title">
+
+                    <span>
+                        VOICE CALLS
+                    </span>
+
+                    <h2>
+                        {{ subscriber.call_minutes }}
+                        <small>min</small>
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="usage-percentage">
+
+                <strong>
+                    {{ call_percentage }}%
+                </strong>
+
+                <span>
+                    of {{ subscriber.call_limit_min }} min limit
+                </span>
+
+            </div>
+
+
+            <div class="large-progress">
+
+                <div class="large-progress-fill call-fill"
+                     style="width: {{ call_progress_width }}%;">
+                </div>
+
+            </div>
+
+
+            <div class="usage-card-footer">
+
+                <span>
+                    Remaining
+                </span>
+
+                <strong>
+
+                    {% if subscriber.call_limit_min > subscriber.call_minutes %}
+                        {{ "%.0f"|format(subscriber.call_limit_min - subscriber.call_minutes) }} min
+                    {% else %}
+                        0 min
+                    {% endif %}
+
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SMS
+        ================================================== -->
+
+        <div class="usage-detail-card">
+
+            <div class="usage-card-top">
+
+                <div class="usage-main-icon sms-usage-icon">
+
+                    <i class="fa-solid fa-message"></i>
+
+                </div>
+
+
+                <div class="usage-card-title">
+
+                    <span>
+                        MESSAGING
+                    </span>
+
+                    <h2>
+                        {{ subscriber.sms_usage }}
+                        <small>SMS</small>
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="usage-percentage">
+
+                <strong>
+                    {{ sms_percentage }}%
+                </strong>
+
+                <span>
+                    of {{ subscriber.sms_limit }} SMS limit
+                </span>
+
+            </div>
+
+
+            <div class="large-progress">
+
+                <div class="large-progress-fill sms-fill"
+                     style="width: {{ sms_progress_width }}%;">
+                </div>
+
+            </div>
+
+
+            <div class="usage-card-footer">
+
+                <span>
+                    Remaining
+                </span>
+
+                <strong>
+
+                    {% if subscriber.sms_limit > subscriber.sms_usage %}
+                        {{ subscriber.sms_limit - subscriber.sms_usage }} SMS
+                    {% else %}
+                        0 SMS
+                    {% endif %}
+
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         USAGE BREAKDOWN
+    ================================================== -->
+
+    <section class="usage-analysis-grid">
+
+
+        <!-- CURRENT VS LIMIT -->
+
+        <div class="usage-analysis-panel">
+
+            <div class="usage-panel-heading">
+
+                <div>
+
+                    <span>
+                        CONSUMPTION
+                    </span>
+
+                    <h2>
+                        Current Usage
+                    </h2>
+
+                </div>
+
+                <i class="fa-solid fa-chart-simple"></i>
+
+            </div>
+
+
+            <div class="usage-breakdown">
+
+
+                <div class="breakdown-row">
+
+                    <div class="breakdown-label">
+
+                        <i class="fa-solid fa-wifi"></i>
+
+                        <span>
+                            Data
+                        </span>
+
+                    </div>
+
+                    <div class="breakdown-value">
+
+                        <strong>
+                            {{ subscriber.data_usage_gb }} GB
+                        </strong>
+
+                        <span>
+                            / {{ subscriber.data_limit_gb }} GB
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="breakdown-row">
+
+                    <div class="breakdown-label">
+
+                        <i class="fa-solid fa-phone"></i>
+
+                        <span>
+                            Calls
+                        </span>
+
+                    </div>
+
+                    <div class="breakdown-value">
+
+                        <strong>
+                            {{ subscriber.call_minutes }}
+                        </strong>
+
+                        <span>
+                            / {{ subscriber.call_limit_min }} min
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="breakdown-row">
+
+                    <div class="breakdown-label">
+
+                        <i class="fa-solid fa-message"></i>
+
+                        <span>
+                            SMS
+                        </span>
+
+                    </div>
+
+                    <div class="breakdown-value">
+
+                        <strong>
+                            {{ subscriber.sms_usage }}
+                        </strong>
+
+                        <span>
+                            / {{ subscriber.sms_limit }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- FUTURE USAGE -->
+
+        <div class="usage-analysis-panel prediction-usage-panel">
+
+            <div class="usage-panel-heading">
+
+                <div>
+
+                    <span>
+                        FORECAST
+                    </span>
+
+                    <h2>
+                        Future Usage
+                    </h2>
+
+                </div>
+
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+            </div>
+
+
+            <div class="forecast-list">
+
+
+                <div class="forecast-item">
+
+                    <div class="forecast-icon">
+
+                        <i class="fa-solid fa-wifi"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Predicted Data
+                        </span>
+
+                        <strong>
+                            {{ subscriber.future_data_gb }} GB
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="forecast-item">
+
+                    <div class="forecast-icon">
+
+                        <i class="fa-solid fa-phone"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Predicted Calls
+                        </span>
+
+                        <strong>
+                            {{ subscriber.future_call_minutes }} min
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="forecast-item">
+
+                    <div class="forecast-icon">
+
+                        <i class="fa-solid fa-message"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Predicted SMS
+                        </span>
+
+                        <strong>
+                            {{ subscriber.future_sms }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="ml-badge">
+
+                <i class="fa-solid fa-brain"></i>
+
+                Machine Learning Forecast
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         OVERAGE ALERT
+    ================================================== -->
+
+    {% if subscriber.overage_flag == "Yes" %}
+
+    <section class="usage-alert danger-alert">
+
+        <div class="alert-icon">
+
+            <i class="fa-solid fa-triangle-exclamation"></i>
+
+        </div>
+
+
+        <div class="alert-content">
+
+            <span>
+                USAGE ALERT
+            </span>
+
+            <h3>
+                This subscriber has exceeded a plan limit
+            </h3>
+
+            <p>
+                Additional usage may result in overage
+                charges. Review the subscriber's billing
+                information for more details.
+            </p>
+
+        </div>
+
+
+        <strong class="alert-charge">
+
+            ₹{{ "%.2f"|format(subscriber.overage_charge or 0) }}
+
+        </strong>
+
+    </section>
+
+    {% else %}
+
+    <section class="usage-alert success-alert">
+
+        <div class="alert-icon">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+        </div>
+
+
+        <div class="alert-content">
+
+            <span>
+                USAGE STATUS
+            </span>
+
+            <h3>
+                Subscriber is within the current plan limits
+            </h3>
+
+            <p>
+                Current consumption has not triggered
+                an overage condition.
+            </p>
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+
+
+    <!-- =================================================
+         INSIGHT
+    ================================================== -->
+
+    <section class="usage-insight">
+
+        <div class="usage-insight-icon">
+
+            <i class="fa-solid fa-lightbulb"></i>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                ANALYTICS INSIGHT
+            </span>
+
+            <h3>
+                Usage monitoring helps identify plan requirements
+            </h3>
+
+            <p>
+                Current consumption and future usage forecasts
+                can be used to evaluate whether the subscriber's
+                existing plan matches their expected requirements.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         QUICK ACTIONS
+    ================================================== -->
+
+    <section class="usage-actions">
+
+
+        <a href="{{ url_for('profile') }}"
+           class="usage-action">
+
+            <i class="fa-solid fa-user"></i>
+
+            <span>
+                Subscriber Profile
+            </span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+
+        <a href="/analytics"
+           class="usage-action">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            <span>
+                View Analytics
+            </span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+
+        <a href="{{ url_for('subscribers') }}"
+           class="usage-action">
+
+            <i class="fa-solid fa-users"></i>
+
+            <span>
+                Find Another Subscriber
+            </span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <div>
+
+        <strong>
+            Mobile Data Intelligence
+        </strong>
+
+        <span>
+            | Subscriber Analytics Platform
+        </span>
+
+    </div>
+
+
+    <div>
+
+        <span>Python</span>
+
+        <span class="footer-dot">•</span>
+
+        <span>Flask</span>
+
+        <span class="footer-dot">•</span>
+
+        <span>MySQL</span>
+
+        <span class="footer-dot">•</span>
+
+        <span>Machine Learning</span>
+
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>

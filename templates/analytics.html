@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Analytics | Mobile Data Intelligence
+    </title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVIGATION BAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <div class="brand-logo">
+            <i class="fa-solid fa-signal"></i>
+        </div>
+
+        <div class="brand-text">
+
+            <strong>Mobile Data</strong>
+
+            <span>Intelligence</span>
+
+        </div>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('dashboard') }}">
+
+            <i class="fa-solid fa-chart-pie"></i>
+
+            Dashboard
+
+        </a>
+
+
+        <a href="{{ url_for('subscribers') }}">
+
+            <i class="fa-solid fa-users"></i>
+
+            Subscribers
+
+        </a>
+
+
+        <a href="{{ url_for('profile') }}">
+
+            <i class="fa-solid fa-user"></i>
+
+            Profile
+
+        </a>
+
+
+        <a href="{{ url_for('usage') }}">
+
+            <i class="fa-solid fa-chart-column"></i>
+
+            Usage
+
+        </a>
+
+
+        <a href="/analytics"
+           class="active">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            Analytics
+
+        </a>
+
+    </div>
+
+
+    <div class="nav-right">
+
+        <div class="status-indicator">
+
+            <span class="status-dot"></span>
+
+            System Online
+
+        </div>
+
+
+        <a href="{{ url_for('logout') }}"
+           class="logout-btn">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="analytics-container">
+
+
+    <!-- =================================================
+         HERO
+    ================================================== -->
+
+    <section class="analytics-hero">
+
+        <div>
+
+            <span class="hero-label">
+
+                <i class="fa-solid fa-brain"></i>
+
+                INTELLIGENT ANALYTICS
+
+            </span>
+
+
+            <h1>
+
+                Subscriber
+                <span>Insights</span>
+
+            </h1>
+
+
+            <p>
+
+                Transform subscriber usage data into
+                meaningful business insights and
+                intelligent recommendations.
+
+            </p>
+
+        </div>
+
+
+        <div class="analytics-hero-icon">
+
+            <i class="fa-solid fa-chart-network"></i>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         ANALYTICS OVERVIEW
+    ================================================== -->
+
+    <section class="analytics-overview">
+
+
+        <div class="analytics-overview-card">
+
+            <div class="overview-icon">
+
+                <i class="fa-solid fa-users"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    SUBSCRIBERS
+                </span>
+
+                <strong>
+                    {{ total_subscribers }}
+                </strong>
+
+                <small>
+                    Records analyzed
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="analytics-overview-card">
+
+            <div class="overview-icon warning-overview">
+
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    OVERAGE
+                </span>
+
+                <strong>
+                    {{ overage_count }}
+                </strong>
+
+                <small>
+                    Subscribers with alerts
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="analytics-overview-card">
+
+            <div class="overview-icon bill-overview">
+
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    BILLING
+                </span>
+
+                <strong>
+                    ₹{{ "%.2f"|format(total_bill) }}
+                </strong>
+
+                <small>
+                    Combined billing
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="analytics-overview-card">
+
+            <div class="overview-icon data-overview">
+
+                <i class="fa-solid fa-wifi"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    AVG DATA
+                </span>
+
+                <strong>
+                    {{ average_data_usage }} GB
+                </strong>
+
+                <small>
+                    Average consumption
+                </small>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         USAGE ANALYTICS
+    ================================================== -->
+
+    <section class="analytics-grid-main">
+
+
+        <!-- DATA ANALYTICS -->
+
+        <div class="analytics-panel">
+
+            <div class="analytics-panel-header">
+
+                <div>
+
+                    <span>
+                        NETWORK CONSUMPTION
+                    </span>
+
+                    <h2>
+                        Data Usage
+                    </h2>
+
+                </div>
+
+
+                <div class="analytics-panel-icon">
+
+                    <i class="fa-solid fa-wifi"></i>
+
+                </div>
+
+            </div>
+
+
+            <div class="analytics-number">
+
+                <strong>
+                    {{ data_percentage }}%
+                </strong>
+
+                <span>
+                    average utilization
+                </span>
+
+            </div>
+
+
+            <div class="analytics-progress">
+
+                <div
+                    class="analytics-progress-fill data-fill"
+                    style="width: {{ data_progress_width }}%;"
+                >
+                </div>
+
+            </div>
+
+
+            <div class="analytics-footer">
+
+                <span>
+                    Current network data consumption
+                </span>
+
+                <i class="fa-solid fa-arrow-trend-up"></i>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CALL ANALYTICS -->
+
+        <div class="analytics-panel">
+
+            <div class="analytics-panel-header">
+
+                <div>
+
+                    <span>
+                        VOICE CONSUMPTION
+                    </span>
+
+                    <h2>
+                        Call Usage
+                    </h2>
+
+                </div>
+
+
+                <div class="analytics-panel-icon">
+
+                    <i class="fa-solid fa-phone"></i>
+
+                </div>
+
+            </div>
+
+
+            <div class="analytics-number">
+
+                <strong>
+                    {{ call_percentage }}%
+                </strong>
+
+                <span>
+                    average utilization
+                </span>
+
+            </div>
+
+
+            <div class="analytics-progress">
+
+                <div
+                    class="analytics-progress-fill call-fill"
+                    style="width: {{ call_progress_width }}%;"
+                >
+                </div>
+
+            </div>
+
+
+            <div class="analytics-footer">
+
+                <span>
+                    Current voice consumption
+                </span>
+
+                <i class="fa-solid fa-phone-volume"></i>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SMS ANALYTICS -->
+
+        <div class="analytics-panel">
+
+            <div class="analytics-panel-header">
+
+                <div>
+
+                    <span>
+                        MESSAGING CONSUMPTION
+                    </span>
+
+                    <h2>
+                        SMS Usage
+                    </h2>
+
+                </div>
+
+
+                <div class="analytics-panel-icon">
+
+                    <i class="fa-solid fa-message"></i>
+
+                </div>
+
+            </div>
+
+
+            <div class="analytics-number">
+
+                <strong>
+                    {{ sms_percentage }}%
+                </strong>
+
+                <span>
+                    average utilization
+                </span>
+
+            </div>
+
+
+            <div class="analytics-progress">
+
+                <div
+                    class="analytics-progress-fill sms-fill"
+                    style="width: {{ sms_progress_width }}%;"
+                >
+                </div>
+
+            </div>
+
+
+            <div class="analytics-footer">
+
+                <span>
+                    Current messaging consumption
+                </span>
+
+                <i class="fa-solid fa-comments"></i>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         BUSINESS INSIGHTS
+    ================================================== -->
+
+    <section class="business-insights">
+
+
+        <div class="business-insight-header">
+
+            <div>
+
+                <span>
+                    BUSINESS INTELLIGENCE
+                </span>
+
+                <h2>
+                    Key Subscriber Insights
+                </h2>
+
+            </div>
+
+
+            <div class="business-icon">
+
+                <i class="fa-solid fa-lightbulb"></i>
+
+            </div>
+
+        </div>
+
+
+        <div class="insight-grid">
+
+
+            <!-- INSIGHT 1 -->
+
+            <div class="insight-card">
+
+                <div class="insight-card-icon">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        USAGE MONITORING
+                    </span>
+
+                    <h3>
+                        Track consumption patterns
+                    </h3>
+
+                    <p>
+                        Monitor data, voice and messaging
+                        usage to understand subscriber
+                        consumption behavior.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- INSIGHT 2 -->
+
+            <div class="insight-card">
+
+                <div class="insight-card-icon">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        OVERAGE DETECTION
+                    </span>
+
+                    <h3>
+                        Identify potential extra charges
+                    </h3>
+
+                    <p>
+                        Subscribers exceeding their plan
+                        limits can be identified for
+                        further analysis.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- INSIGHT 3 -->
+
+            <div class="insight-card">
+
+                <div class="insight-card-icon">
+
+                    <i class="fa-solid fa-brain"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        MACHINE LEARNING
+                    </span>
+
+                    <h3>
+                        Predict future requirements
+                    </h3>
+
+                    <p>
+                        Machine-learning models can use
+                        subscriber behavior to estimate
+                        future usage and plan requirements.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- INSIGHT 4 -->
+
+            <div class="insight-card">
+
+                <div class="insight-card-icon">
+
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        PLAN OPTIMIZATION
+                    </span>
+
+                    <h3>
+                        Support better plan decisions
+                    </h3>
+
+                    <p>
+                        Usage and prediction information
+                        can help evaluate whether a plan
+                        matches subscriber requirements.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         ML PIPELINE
+    ================================================== -->
+
+    <section class="ml-pipeline">
+
+
+        <div class="pipeline-header">
+
+            <div>
+
+                <span>
+                    INTELLIGENCE PIPELINE
+                </span>
+
+                <h2>
+                    From Subscriber Data to Insights
+                </h2>
+
+            </div>
+
+
+            <div class="pipeline-icon">
+
+                <i class="fa-solid fa-diagram-project"></i>
+
+            </div>
+
+        </div>
+
+
+        <div class="pipeline-steps">
+
+
+            <div class="pipeline-step">
+
+                <div class="pipeline-number">
+                    01
+                </div>
+
+                <div>
+
+                    <i class="fa-solid fa-database"></i>
+
+                    <strong>
+                        Data
+                    </strong>
+
+                    <span>
+                        Subscriber records
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="pipeline-line"></div>
+
+
+            <div class="pipeline-step">
+
+                <div class="pipeline-number">
+                    02
+                </div>
+
+                <div>
+
+                    <i class="fa-solid fa-filter"></i>
+
+                    <strong>
+                        Processing
+                    </strong>
+
+                    <span>
+                        Data preparation
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="pipeline-line"></div>
+
+
+            <div class="pipeline-step">
+
+                <div class="pipeline-number">
+                    03
+                </div>
+
+                <div>
+
+                    <i class="fa-solid fa-brain"></i>
+
+                    <strong>
+                        ML Models
+                    </strong>
+
+                    <span>
+                        Prediction engine
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="pipeline-line"></div>
+
+
+            <div class="pipeline-step">
+
+                <div class="pipeline-number">
+                    04
+                </div>
+
+                <div>
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                    <strong>
+                        Insights
+                    </strong>
+
+                    <span>
+                        Business intelligence
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         ACTIONS
+    ================================================== -->
+
+    <section class="analytics-actions">
+
+
+        <a href="{{ url_for('dashboard') }}"
+           class="analytics-action">
+
+            <i class="fa-solid fa-chart-pie"></i>
+
+            <span>
+                Dashboard
+            </span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+
+        <a href="{{ url_for('subscribers') }}"
+           class="analytics-action">
+
+            <i class="fa-solid fa-users"></i>
+
+            <span>
+                Subscriber Directory
+            </span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+
+        <a href="{{ url_for('usage') }}"
+           class="analytics-action">
+
+            <i class="fa-solid fa-chart-column"></i>
+
+            <span>
+                Usage Analytics
+            </span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <div>
+
+        <strong>
+            Mobile Data Intelligence
+        </strong>
+
+        <span>
+            | Subscriber Analytics Platform
+        </span>
+
+    </div>
+
+
+    <div>
+
+        <span>
+            Python
+        </span>
+
+        <span class="footer-dot">•</span>
+
+        <span>
+            Flask
+        </span>
+
+        <span class="footer-dot">•</span>
+
+        <span>
+            MySQL
+        </span>
+
+        <span class="footer-dot">•</span>
+
+        <span>
+            Machine Learning
+        </span>
+
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>

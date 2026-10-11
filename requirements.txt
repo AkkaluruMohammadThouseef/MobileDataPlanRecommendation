@@ -1,0 +1,8 @@
+pandas
+numpy
+scikit-learn
+flask
+joblib
+werkzeug
+mysql-connector-python
+python-dotenv
