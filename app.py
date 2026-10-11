@@ -45,7 +45,7 @@ def ensure_database_schema():
 
         # These columns are read by dashboard, analytics, and usage pages.
         required_columns = {
-            "subscriber_code": "VARCHAR(30) NULL UNIQUE",
+           "subscriber_code": "VARCHAR(30) NULL",
             "age": "INT NULL",
             "region": "VARCHAR(50) NULL",
             "tenure_months": "INT NULL",
